@@ -1,0 +1,92 @@
+SUBJECTS={"mech":{"it":"Meccanica","en":"Mechanics"},"fluid":{"it":"Fluidodinamica","en":"Fluid dynamics"},"aero":{"it":"Aerodinamica","en":"Aerodynamics"}}
+LESSON_DATA=[
+("mech","Unità e vettori",r"\vec{a}=a_x\hat{i}+a_y\hat{j}","Le grandezze fisiche hanno unità. Usa il SI: metro, chilogrammo, secondo. I vettori hanno modulo, direzione e verso.","Physical quantities have units. Use SI: metre, kilogram, second. Vectors have magnitude, direction and sense."),
+("mech","Cinematica 1D",r"v=\frac{\Delta x}{\Delta t}","La velocità media è lo spostamento diviso il tempo. Con accelerazione costante: v=v₀+at e x=x₀+v₀t+½at².","Average velocity is displacement divided by time. With constant acceleration: v=v₀+at and x=x₀+v₀t+½at²."),
+("mech","Leggi di Newton",r"\sum F=ma","La forza risultante produce accelerazione: più massa richiede più forza per la stessa accelerazione.","The net force produces acceleration: more mass requires more force for the same acceleration."),
+("mech","Lavoro ed energia",r"E_k=\frac12 mv^2","Il lavoro di una forza costante parallela allo spostamento è W=Fs. L'energia cinetica è ½mv².","Work by a constant force parallel to displacement is W=Fs. Kinetic energy is ½mv²."),
+("mech","Quantità di moto",r"p=mv","La quantità di moto è massa per velocità. In un sistema isolato la quantità di moto totale si conserva.","Momentum is mass times velocity. In an isolated system total momentum is conserved."),
+("fluid","Proprietà dei fluidi",r"\rho=\frac{m}{V}","La densità è massa per volume. La pressione è forza normale divisa per area: p=F/A.","Density is mass per volume. Pressure is normal force divided by area: p=F/A."),
+("fluid","Idrostatica",r"p=p_0+\rho gh","In un fluido fermo la pressione aumenta con la profondità in proporzione a densità e gravità.","In a stationary fluid, pressure increases with depth in proportion to density and gravity."),
+("fluid","Continuità",r"A_1v_1=A_2v_2","Per un fluido incomprimibile in moto stazionario, la portata volumetrica resta costante: una sezione più piccola implica velocità maggiore.","For steady incompressible flow, volumetric flow rate is constant: a smaller area means higher speed."),
+("fluid","Bernoulli",r"p+\frac12\rho v^2+\rho gz=\mathrm{costante}","Lungo una linea di corrente ideale, pressione, energia cinetica per volume ed energia potenziale per volume si scambiano.","Along an ideal streamline, pressure, kinetic energy per volume, and potential energy per volume trade off."),
+("fluid","Perdite e Reynolds",r"Re=\frac{\rho vD}{\mu}","Il numero di Reynolds confronta effetti inerziali e viscosi. Nei tubi, valori bassi indicano tipicamente regime laminare; valori elevati possono indicare turbolenza.","Reynolds number compares inertial and viscous effects. In pipes, low values typically indicate laminar flow; high values may indicate turbulence."),
+("aero","Atmosfera e pressione dinamica",r"q=\frac12\rho V^2","La pressione dinamica cresce con il quadrato della velocità. Densità e velocità determinano il livello di energia cinetica del flusso.","Dynamic pressure grows with the square of speed. Density and speed set the flow's kinetic-energy level."),
+("aero","Portanza e resistenza",r"L=qSC_L,\quad D=qSC_D","Portanza e resistenza dipendono dalla pressione dinamica, area di riferimento e coefficienti aerodinamici.","Lift and drag depend on dynamic pressure, reference area, and aerodynamic coefficients."),
+("aero","Angolo d'attacco",r"C_L\approx C_{L0}+a\alpha","A piccoli angoli, la portanza spesso cresce quasi linearmente con l'angolo d'attacco. Vicino allo stallo questa relazione smette di valere.","At small angles, lift often increases nearly linearly with angle of attack. Near stall, this relation no longer holds."),
+("aero","Profilo alare e NACA",r"c=\text{corda},\quad AR=\frac{b^2}{S}","La corda è la distanza tra bordo d'attacco e bordo d'uscita. L'allungamento alare AR lega apertura e area.","Chord is the distance from leading to trailing edge. Aspect ratio AR relates span and area."),
+("aero","Prestazioni e stallo",r"\frac{L}{D}=\frac{C_L}{C_D}","Il rapporto L/D misura l'efficienza aerodinamica. Lo stallo è associato alla separazione del flusso e alla perdita di portanza.","Lift-to-drag ratio measures aerodynamic efficiency. Stall is associated with flow separation and loss of lift."),
+]
+LESSONS=[]
+for i,(sub,title,formula,it,en) in enumerate(LESSON_DATA,1):
+    LESSONS.append({'id':i,'subject':sub,'subject_name':SUBJECTS[sub],'title':{'it':title,'en':title if sub!='fluid' else {'Proprietà dei fluidi':'Fluid properties','Idrostatica':'Hydrostatics','Continuità':'Continuity','Bernoulli':'Bernoulli equation','Perdite e Reynolds':'Losses and Reynolds number'}.get(title,title)},'formula':formula,'body':{'it':it,'en':en}})
+def _ex(i,lesson,title,prompt_it,prompt_en,answer,unit,solution_it,solution_en,formula,subject):
+ return {'id':i,'lesson_id':lesson,'subject':subject,'title':{'it':title,'en':title},'prompt':{'it':prompt_it,'en':prompt_en},'answer':float(answer),'unit':unit,'solution':{'it':solution_it,'en':solution_en},'formula':formula}
+EXERCISES=[
+_ex(1,1,"Componenti vettoriali","Un vettore ha componenti x=3 m e y=4 m. Calcola il modulo.","A vector has components x=3 m and y=4 m. Find its magnitude.",5,"m","Usa Pitagora: √(3²+4²)=5 m.","Use Pythagoras: √(3²+4²)=5 m.",r"a=\sqrt{a_x^2+a_y^2}","mech"),
+_ex(2,2,"Velocità media","Percorri 150 m in 10 s. Velocità media in m/s?","Travel 150 m in 10 s. Average speed in m/s?",15,"m/s","v=s/t=150/10=15 m/s.","v=s/t=150/10=15 m/s.",r"v=s/t","mech"),
+_ex(3,2,"Accelerazione","La velocità passa da 4 a 20 m/s in 4 s. Accelerazione?","Speed changes from 4 to 20 m/s in 4 s. Acceleration?",4,"m/s²","a=(20−4)/4=4 m/s².","a=(20−4)/4=4 m/s².",r"a=\Delta v/\Delta t","mech"),
+_ex(4,3,"Seconda legge","Una massa di 8 kg accelera a 2 m/s². Forza risultante?","An 8 kg mass accelerates at 2 m/s². Net force?",16,"N","F=ma=8×2=16 N.","F=ma=8×2=16 N.",r"F=ma","mech"),
+_ex(5,3,"Peso","Calcola il peso di 5 kg con g=9.81 m/s².","Find the weight of 5 kg using g=9.81 m/s².",49.05,"N","P=mg=5×9.81=49.05 N.","W=mg=5×9.81=49.05 N.",r"P=mg","mech"),
+_ex(6,4,"Energia cinetica","Massa 2 kg, velocità 3 m/s. Energia cinetica?","Mass 2 kg, speed 3 m/s. Kinetic energy?",9,"J","E=½×2×3²=9 J.","E=½×2×3²=9 J.",r"E_k=\frac12mv^2","mech"),
+_ex(7,4,"Lavoro","Una forza di 20 N sposta un oggetto di 3 m nella stessa direzione. Lavoro?","A 20 N force moves an object 3 m in the same direction. Work?",60,"J","W=Fs=20×3=60 J.","W=Fs=20×3=60 J.",r"W=Fs","mech"),
+_ex(8,5,"Quantità di moto","Massa 4 kg a 6 m/s. Quantità di moto?","A 4 kg mass moves at 6 m/s. Momentum?",24,"kg·m/s","p=mv=4×6=24 kg·m/s.","p=mv=4×6=24 kg·m/s.",r"p=mv","mech"),
+_ex(9,5,"Potenza media","Un lavoro di 600 J avviene in 12 s. Potenza?","600 J of work is done in 12 s. Power?",50,"W","P=W/t=600/12=50 W.","P=W/t=600/12=50 W.",r"P=W/t","mech"),
+_ex(10,1,"Conversione unità","Converti 72 km/h in m/s.","Convert 72 km/h to m/s.",20,"m/s","72÷3.6=20 m/s.","72÷3.6=20 m/s.",r"v_{m/s}=v_{km/h}/3.6","mech"),
+_ex(11,6,"Densità","Una massa di 12 kg occupa 0.004 m³. Densità?","A 12 kg mass occupies 0.004 m³. Density?",3000,"kg/m³","ρ=m/V=12/0.004=3000 kg/m³.","ρ=m/V=12/0.004=3000 kg/m³.",r"\rho=m/V","fluid"),
+_ex(12,6,"Pressione","Una forza di 200 N agisce su 0.5 m². Pressione?","A 200 N force acts on 0.5 m². Pressure?",400,"Pa","p=F/A=200/0.5=400 Pa.","p=F/A=200/0.5=400 Pa.",r"p=F/A","fluid"),
+_ex(13,7,"Pressione idrostatica","Acqua a 2 m di profondità, ρ=1000 kg/m³ e g=9.81. Pressione relativa?","Water at 2 m depth, ρ=1000 kg/m³ and g=9.81. Gauge pressure?",19620,"Pa","p=ρgh=1000×9.81×2=19620 Pa.","p=ρgh=1000×9.81×2=19620 Pa.",r"p=\rho gh","fluid"),
+_ex(14,7,"Forza idrostatica","Pressione uniforme 5000 Pa su area 0.2 m². Forza?","Uniform pressure 5000 Pa on area 0.2 m². Force?",1000,"N","F=pA=5000×0.2=1000 N.","F=pA=5000×0.2=1000 N.",r"F=pA","fluid"),
+_ex(15,8,"Continuità","A1=0.04 m², v1=2 m/s, A2=0.01 m². Trova v2.","A1=0.04 m², v1=2 m/s, A2=0.01 m². Find v2.",8,"m/s","A1v1=A2v2, quindi v2=0.04×2/0.01=8 m/s.","A1v1=A2v2, so v2=0.04×2/0.01=8 m/s.",r"A_1v_1=A_2v_2","fluid"),
+_ex(16,8,"Portata volumetrica","Area 0.02 m² e velocità 3 m/s. Portata?","Area 0.02 m² and speed 3 m/s. Flow rate?",0.06,"m³/s","Q=Av=0.02×3=0.06 m³/s.","Q=Av=0.02×3=0.06 m³/s.",r"Q=Av","fluid"),
+_ex(17,9,"Bernoulli: pressione","Acqua: v1=2, v2=4 m/s, stessa quota. p1−p2? ρ=1000.","Water: v1=2, v2=4 m/s, same elevation. p1−p2? ρ=1000.",6000,"Pa","p1−p2=½ρ(v2²−v1²)=500×12=6000 Pa.","p1−p2=½ρ(v2²−v1²)=500×12=6000 Pa.",r"\Delta p=\frac12\rho(v_2^2-v_1^2)","fluid"),
+_ex(18,9,"Energia per volume","Acqua con velocità 5 m/s. Pressione dinamica? ρ=1000.","Water flowing at 5 m/s. Dynamic pressure? ρ=1000.",12500,"Pa","q=½ρv²=0.5×1000×25=12500 Pa.","q=½ρv²=0.5×1000×25=12500 Pa.",r"q=\frac12\rho v^2","fluid"),
+_ex(19,10,"Numero di Reynolds","ρ=1000 kg/m³, v=0.5 m/s, D=0.02 m, μ=0.001 Pa·s. Re?","ρ=1000 kg/m³, v=0.5 m/s, D=0.02 m, μ=0.001 Pa·s. Re?",10000,"—","Re=ρvD/μ=1000×0.5×0.02/0.001=10000.","Re=ρvD/μ=1000×0.5×0.02/0.001=10000.",r"Re=\rho vD/\mu","fluid"),
+_ex(20,10,"Portata massica","ρ=1.2 kg/m³ e portata volumetrica 2 m³/s. Portata massica?","ρ=1.2 kg/m³ and volumetric flow 2 m³/s. Mass flow?",2.4,"kg/s","ṁ=ρQ=1.2×2=2.4 kg/s.","ṁ=ρQ=1.2×2=2.4 kg/s.",r"\dot m=\rho Q","fluid"),
+_ex(21,11,"Pressione dinamica","Aria ρ=1.2 kg/m³, V=10 m/s. Pressione dinamica?","Air ρ=1.2 kg/m³, V=10 m/s. Dynamic pressure?",60,"Pa","q=½×1.2×10²=60 Pa.","q=½×1.2×10²=60 Pa.",r"q=\frac12\rho V^2","aero"),
+_ex(22,12,"Portanza","q=100 Pa, S=2 m², CL=0.8. Portanza?","q=100 Pa, S=2 m², CL=0.8. Lift?",160,"N","L=qSCL=100×2×0.8=160 N.","L=qSCL=100×2×0.8=160 N.",r"L=qSC_L","aero"),
+_ex(23,12,"Resistenza","q=200 Pa, S=3 m², CD=0.05. Resistenza?","q=200 Pa, S=3 m², CD=0.05. Drag?",30,"N","D=qSCD=200×3×0.05=30 N.","D=qSCD=200×3×0.05=30 N.",r"D=qSC_D","aero"),
+_ex(24,13,"Angolo d'attacco","Un modello ha CL=0.1 per grado. A 5° con CL0=0, CL?","A model has CL=0.1 per degree. At 5° with CL0=0, CL?",0.5,"—","CL≈aα=0.1×5=0.5.","CL≈aα=0.1×5=0.5.",r"C_L=a\alpha","aero"),
+_ex(25,14,"Allungamento alare","Apertura b=10 m, area S=20 m². AR?","Span b=10 m, area S=20 m². AR?",5,"—","AR=b²/S=100/20=5.","AR=b²/S=100/20=5.",r"AR=b^2/S","aero"),
+_ex(26,14,"Area alare","Apertura 8 m, allungamento 4. Area?","Span 8 m, aspect ratio 4. Area?",16,"m²","S=b²/AR=64/4=16 m².","S=b²/AR=64/4=16 m².",r"S=b^2/AR","aero"),
+_ex(27,15,"Efficienza L/D","CL=0.9 e CD=0.06. Rapporto L/D?","CL=0.9 and CD=0.06. Lift-to-drag ratio?",15,"—","L/D=CL/CD=0.9/0.06=15.","L/D=CL/CD=0.9/0.06=15.",r"L/D=C_L/C_D","aero"),
+_ex(28,11,"Velocità da pressione dinamica","q=150 Pa, ρ=1.2 kg/m³. Velocità?","q=150 Pa, ρ=1.2 kg/m³. Speed?",15.8113883,"m/s","V=√(2q/ρ)=√250≈15.81 m/s.","V=√(2q/ρ)=√250≈15.81 m/s.",r"V=\sqrt{2q/\rho}","aero"),
+_ex(29,12,"Portanza a nuova velocità","La portanza è 1000 N a 20 m/s. Con stessa configurazione a 30 m/s?","Lift is 1000 N at 20 m/s. Same configuration at 30 m/s?",2250,"N","L∝V², quindi 1000×(30/20)²=2250 N.","L∝V², so 1000×(30/20)²=2250 N.",r"L_2=L_1(V_2/V_1)^2","aero"),
+_ex(30,15,"Resistenza indotta semplificata","CL=0.8, AR=8, e=1. Calcola CDi=CL²/(πAR e).","CL=0.8, AR=8, e=1. Find CDi=CL²/(πAR e).",0.02546479,"—","CDi=0.64/(8π)=0.02546.","CDi=0.64/(8π)=0.02546.",r"C_{D_i}=C_L^2/(\pi AR e)","aero"),
+]
+
+
+# Esercizi aggiuntivi con passaggi espliciti: ogni soluzione mostra formula, sostituzione e risultato.
+EXTRA_DATA = [
+(31,2,"Spazio con velocità costante","Un ciclista viaggia a 6 m/s per 25 s. Spazio percorso?","A cyclist travels at 6 m/s for 25 s. Distance?",150,"m","s=vt=6×25=150 m.","s=v*t","mech"),
+(32,2,"Tempo di percorrenza","Un veicolo percorre 240 m a 12 m/s. Tempo?","A vehicle travels 240 m at 12 m/s. Time?",20,"s","t=s/v=240/12=20 s.","t=s/v","mech"),
+(33,3,"Forza con massa diversa","Massa 12 kg, accelerazione 3 m/s². Forza?","Mass 12 kg, acceleration 3 m/s². Force?",36,"N","F=ma=12×3=36 N.","F=m*a","mech"),
+(34,3,"Accelerazione da forza","Una forza netta di 45 N agisce su 9 kg. Accelerazione?","A net force of 45 N acts on 9 kg. Acceleration?",5,"m/s²","a=F/m=45/9=5 m/s².","a=F/m","mech"),
+(35,4,"Energia cinetica veloce","Massa 4 kg, velocità 5 m/s. Energia cinetica?","Mass 4 kg, speed 5 m/s. Kinetic energy?",50,"J","Ek=0.5×4×5²=50 J.","Ek=0.5*m*v^2","mech"),
+(36,4,"Potenza","Un motore compie 1800 J in 30 s. Potenza media?","A motor does 1800 J in 30 s. Average power?",60,"W","P=W/t=1800/30=60 W.","P=W/t","mech"),
+(37,5,"Quantità di moto","Massa 3 kg a 7 m/s. Quantità di moto?","Mass 3 kg at 7 m/s. Momentum?",21,"kg·m/s","p=mv=3×7=21 kg·m/s.","p=m*v","mech"),
+(38,1,"Componenti 6-8","Componenti di un vettore: 6 e 8. Modulo?","Vector components are 6 and 8. Magnitude?",10,"m","|a|=sqrt(6²+8²)=10 m.","|a|=sqrt(ax^2+ay^2)","mech"),
+(39,6,"Volume da densità","Massa 5 kg, densità 2500 kg/m³. Volume?","Mass 5 kg, density 2500 kg/m³. Volume?",0.002,"m³","V=m/rho=5/2500=0.002 m³.","V=m/rho","fluid"),
+(40,6,"Pressione da area","Forza 600 N su area 0.3 m². Pressione?","Force 600 N on area 0.3 m². Pressure?",2000,"Pa","p=F/A=600/0.3=2000 Pa.","p=F/A","fluid"),
+(41,7,"Profondità","Pressione relativa 9810 Pa in acqua. Profondità?","Gauge pressure is 9810 Pa in water. Depth?",1,"m","h=p/(rho*g)=9810/(1000×9.81)=1 m.","h=p/(rho*g)","fluid"),
+(42,7,"Pressione a 3 metri","Acqua a 3 m, rho=1000 kg/m³, g=9.81. Pressione relativa?","Water at 3 m, rho=1000 kg/m³, g=9.81. Gauge pressure?",29430,"Pa","p=rho*g*h=1000×9.81×3=29430 Pa.","p=rho*g*h","fluid"),
+(43,8,"Velocità nella gola","A1=0.06 m², v1=2 m/s, A2=0.02 m². v2?","A1=0.06 m², v1=2 m/s, A2=0.02 m². v2?",6,"m/s","v2=A1*v1/A2=(0.06×2)/0.02=6 m/s.","A1*v1=A2*v2","fluid"),
+(44,8,"Portata","Una sezione 0.015 m² ha velocità 4 m/s. Portata?","A section of 0.015 m² has speed 4 m/s. Flow rate?",0.06,"m³/s","Q=A*v=0.015×4=0.06 m³/s.","Q=A*v","fluid"),
+(45,9,"Pressione dinamica acqua","Acqua a 3 m/s, densità 1000 kg/m³. q?","Water at 3 m/s, density 1000 kg/m³. q?",4500,"Pa","q=0.5*rho*v²=0.5×1000×9=4500 Pa.","q=0.5*rho*v^2","fluid"),
+(46,10,"Reynolds in aria","rho=1.2, v=10 m/s, D=0.1 m, mu=1.8e-5 Pa·s. Re?","rho=1.2, v=10 m/s, D=0.1 m, mu=1.8e-5 Pa·s. Re?",66666.6667,"—","Re=rho*v*D/mu=1.2×10×0.1/(1.8e-5)≈66667.","Re=rho*v*D/mu","fluid"),
+(47,6,"Massa del fluido","Volume 0.02 m³, densità 800 kg/m³. Massa?","Volume 0.02 m³, density 800 kg/m³. Mass?",16,"kg","m=rho*V=800×0.02=16 kg.","m=rho*V","fluid"),
+(48,9,"Bernoulli velocità","Differenza di pressione 2000 Pa, rho=1000 kg/m³, fluido accelera da fermo. Velocità ideale?","Pressure difference 2000 Pa, rho=1000 kg/m³, ideal speed from rest?",2,"m/s","v=sqrt(2*delta_p/rho)=sqrt(4)=2 m/s.","v=sqrt(2*delta_p/rho)","fluid"),
+(49,11,"Pressione dinamica maggiore","Aria rho=1.25 kg/m³ e V=20 m/s. q?","Air rho=1.25 kg/m³ and V=20 m/s. q?",250,"Pa","q=0.5×1.25×20²=250 Pa.","q=0.5*rho*V^2","aero"),
+(50,12,"Portanza con area","q=250 Pa, S=4 m², CL=0.6. Portanza?","q=250 Pa, S=4 m², CL=0.6. Lift?",600,"N","L=q*S*CL=250×4×0.6=600 N.","L=q*S*CL","aero"),
+(51,12,"Resistenza con coefficienti","q=150 Pa, S=5 m², CD=0.04. Drag?","q=150 Pa, S=5 m², CD=0.04. Drag?",30,"N","D=q*S*CD=150×5×0.04=30 N.","D=q*S*CD","aero"),
+(52,13,"Coefficiente di portanza","L=900 N, q=300 Pa, S=3 m². CL?","L=900 N, q=300 Pa, S=3 m². CL?",1,"—","CL=L/(q*S)=900/(300×3)=1.","CL=L/(q*S)","aero"),
+(53,14,"Area da apertura e AR","Apertura 12 m, AR=6. Area alare?","Span 12 m, AR=6. Wing area?",24,"m²","S=b²/AR=12²/6=24 m².","S=b^2/AR","aero"),
+(54,14,"Allungamento","Apertura 15 m, area 25 m². AR?","Span 15 m, area 25 m². AR?",9,"—","AR=b²/S=225/25=9.","AR=b^2/S","aero"),
+(55,15,"Efficienza aerodinamica","CL=1.2 e CD=0.08. L/D?","CL=1.2 and CD=0.08. L/D?",15,"—","L/D=CL/CD=1.2/0.08=15.","L/D=CL/CD","aero"),
+(56,11,"Velocità doppia","La velocità passa da 10 a 20 m/s. Il rapporto delle pressioni dinamiche q2/q1?","Speed rises from 10 to 20 m/s. Ratio q2/q1?",4,"—","q è proporzionale a V²: (20/10)²=4.","q2/q1=(V2/V1)^2","aero"),
+(57,12,"Portanza a velocità ridotta","Portanza 800 N a 40 m/s. Stessa configurazione a 20 m/s?","Lift is 800 N at 40 m/s. Same configuration at 20 m/s?",200,"N","L2=L1*(V2/V1)²=800×(20/40)²=200 N.","L2=L1*(V2/V1)^2","aero"),
+(58,13,"Angolo d'attacco lineare","Pendenza CL per grado 0.08, angolo 6°, CL0=0.1. CL?","Lift slope 0.08 per degree, angle 6°, CL0=0.1. CL?",0.58,"—","CL=CL0+a*alpha=0.1+0.08×6=0.58.","CL=CL0+a*alpha","aero"),
+(59,15,"Resistenza indotta","CL=0.6, AR=9, e=0.9. CDi?","CL=0.6, AR=9, e=0.9. CDi?",0.0141471,"—","CDi=CL²/(pi*AR*e)=0.36/(pi×9×0.9)≈0.01415.","CDi=CL^2/(pi*AR*e)","aero"),
+(60,11,"Pressione dinamica aria","rho=1.1 kg/m³, V=15 m/s. q?","rho=1.1 kg/m³, V=15 m/s. q?",123.75,"Pa","q=0.5×1.1×15²=123.75 Pa.","q=0.5*rho*V^2","aero"),
+]
+for i, lesson, title, it, en, answer, unit, solution, formula, subject in EXTRA_DATA:
+    EXERCISES.append(_ex(i,lesson,title,it,en,answer,unit,solution,solution,formula,subject))
